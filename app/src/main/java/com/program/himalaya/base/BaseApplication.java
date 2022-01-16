@@ -3,6 +3,7 @@ package com.program.himalaya.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.program.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.DeviceInfoProviderDefault;
@@ -31,6 +32,10 @@ public class BaseApplication extends Application {
             mXimalaya.setPackid("android.test");
             mXimalaya.init(this, mAppSecret, getDeviceInfoProvider(this));
         }
+
+        //初始化LogUtil
+        LogUtil.init(this.getPackageName(),false);
+
     }
     public IDeviceInfoProvider getDeviceInfoProvider(Context context) {
         return new DeviceInfoProviderDefault(context) {
