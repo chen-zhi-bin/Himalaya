@@ -2,6 +2,7 @@ package com.program.himalaya.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 
 import com.program.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
@@ -10,6 +11,9 @@ import com.ximalaya.ting.android.opensdk.datatrasfer.DeviceInfoProviderDefault;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDeviceInfoProvider;
 
 public class BaseApplication extends Application {
+
+    private static Handler sHandler = null;
+
     private String oaid;
     @Override
     public void onCreate() {
@@ -35,7 +39,10 @@ public class BaseApplication extends Application {
 
         //初始化LogUtil
         LogUtil.init(this.getPackageName(),false);
-
+        sHandler = new Handler();
+    }
+    public static Handler getsHandler(){
+        return sHandler;
     }
     public IDeviceInfoProvider getDeviceInfoProvider(Context context) {
         return new DeviceInfoProviderDefault(context) {
