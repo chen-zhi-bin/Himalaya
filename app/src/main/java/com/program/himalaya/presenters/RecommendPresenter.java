@@ -2,6 +2,7 @@ package com.program.himalaya.presenters;
 
 import androidx.annotation.Nullable;
 
+import com.program.himalaya.api.XimalayaApi;
 import com.program.himalaya.interfaces.IRecommendPresenter;
 import com.program.himalaya.interfaces.IRecommendViewCallback;
 import com.program.himalaya.utils.Constants;
@@ -12,6 +13,7 @@ import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,7 @@ public class RecommendPresenter implements IRecommendPresenter {
     private static final String TAG = "RecommendPresenter";
 
     private List<IRecommendViewCallback> mCallbacks = new ArrayList<>();
+    private List<Album> mCurrentRecommend=null;
 
     private RecommendPresenter() {
 
@@ -47,6 +50,14 @@ public class RecommendPresenter implements IRecommendPresenter {
     }
 
     /**
+     * 获取当前的推荐专辑列表
+     * @return  推荐专辑，使用前判空
+     */
+    public List<Album> getCurrentRecommend(){
+        return mCurrentRecommend;
+    }
+
+    /**
      * 获取推荐内容，其实就是猜你喜欢
      */
     @Override
@@ -54,10 +65,8 @@ public class RecommendPresenter implements IRecommendPresenter {
         //推荐喜欢内容
         //封装参数
         updateLoadnig();
-        Map<String, String> map = new HashMap<>();
-        //这个参数表示一页数据返回多少条
-        map.put(DTransferConstants.LIKE_COUNT, Constants.RENCOMMEND_COUNT + "");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
+        XimalayaApi ximalayaApi = XimalayaApi.getXimalayaApi();
+        ximalayaApi.getRecommendList(new IDataCallBack<GussLikeAlbumList>() {
             @Override
             public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
                 LogUtil.d(TAG, "thread.name-->" + Thread.currentThread().getName());
@@ -91,6 +100,8 @@ public class RecommendPresenter implements IRecommendPresenter {
     private void handlerRecommendResult(List<Album> albumList) {
         //通知UI更新
         if (albumList!=null){
+//            //测试，清空一下，让界面显示空
+//            albumList.clear();
             if (albumList.size()==0){
                 for (IRecommendViewCallback callback:mCallbacks){
                     callback.onEmpty();
@@ -99,6 +110,7 @@ public class RecommendPresenter implements IRecommendPresenter {
                 for(IRecommendViewCallback callback:mCallbacks){
                     callback.onRecommendListLoaded(albumList);
                 }
+                this.mCurrentRecommend = albumList;
             }
         }
     }
@@ -128,7 +140,7 @@ public class RecommendPresenter implements IRecommendPresenter {
     @Override
     public void ungisterViewCallback(IRecommendViewCallback callback) {
         if (mCallbacks != null) {
-            mCallbacks.remove(mCallbacks);
+            mCallbacks.remove(callback);
         }
     }
 }

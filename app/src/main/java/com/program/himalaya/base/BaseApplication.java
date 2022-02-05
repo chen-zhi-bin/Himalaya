@@ -9,12 +9,16 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.DeviceInfoProviderDefault;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDeviceInfoProvider;
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 
 public class BaseApplication extends Application {
 
     private static Handler sHandler = null;
 
     private String oaid;
+
+    private static Context sContext = null;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,9 +41,18 @@ public class BaseApplication extends Application {
             mXimalaya.init(this, mAppSecret, getDeviceInfoProvider(this));
         }
 
+        //初始化播放器
+        XmPlayerManager.getInstance(this).init();
+
         //初始化LogUtil
         LogUtil.init(this.getPackageName(),false);
         sHandler = new Handler();
+
+        sContext =getBaseContext();
+    }
+
+    public static Context getAppContext(){
+        return sContext;
     }
     public static Handler getsHandler(){
         return sHandler;

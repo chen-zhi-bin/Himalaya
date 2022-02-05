@@ -1,43 +1,37 @@
 package com.program.himalaya.fragments;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.program.himalaya.DetailActivity;
 import com.program.himalaya.R;
-import com.program.himalaya.adapters.RecommendListAdapter;
+import com.program.himalaya.adapters.AlbumListAdapter;
 import com.program.himalaya.base.BaseFragment;
 import com.program.himalaya.interfaces.IRecommendViewCallback;
+import com.program.himalaya.presenters.AlbumDetailPresenter;
 import com.program.himalaya.presenters.RecommendPresenter;
-import com.program.himalaya.utils.Constants;
 import com.program.himalaya.utils.LogUtil;
 import com.program.himalaya.views.UILoader;
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
-import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class  RecommendFagment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener {
+public class  RecommendFagment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener, AlbumListAdapter.OnRecommendItemClickListener {
     private static final String TAG="RecommendFagment";
     private UILoader mUiLoader;
     private View mrootView;
     private RecyclerView mrecommendRV;
-    private RecommendListAdapter mRecommendListAdapter;
+    private AlbumListAdapter mRecommendListAdapter;
     private RecommendPresenter mRecommendPresenter;
 
     @Override
@@ -74,6 +68,8 @@ public class  RecommendFagment extends BaseFragment implements IRecommendViewCal
         //RecyclerView的使用
         //1.找到控件
         mrecommendRV = mrootView.findViewById(R.id.recommand_list);
+        TwinklingRefreshLayout twinklingRefreshLayout=mrootView.findViewById(R.id.over_scroll_view);
+        twinklingRefreshLayout.setPureScrollModeOn();
         //2.设置布局管理器
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -89,8 +85,9 @@ public class  RecommendFagment extends BaseFragment implements IRecommendViewCal
             }
         });
         //3.设置适配器
-        mRecommendListAdapter =new RecommendListAdapter();
+        mRecommendListAdapter =new AlbumListAdapter();
         mrecommendRV.setAdapter(mRecommendListAdapter);
+        mRecommendListAdapter.setOnRecommendItemClickListener(this);
         return mrootView;
     }
 
@@ -139,5 +136,15 @@ public class  RecommendFagment extends BaseFragment implements IRecommendViewCal
         if (mRecommendPresenter  != null) {
             mRecommendPresenter.getRecommendList();
         }
+    }
+
+    @Override
+    public void onItemClick(int position, Album album) {
+        //根据位置拿数据
+
+        AlbumDetailPresenter.getInstance().setTargetAlbum(album);
+        //item被点击,跳转到详情界面
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        startActivity(intent);
     }
 }
