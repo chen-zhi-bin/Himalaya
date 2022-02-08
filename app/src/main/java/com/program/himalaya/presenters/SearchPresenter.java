@@ -2,7 +2,7 @@ package com.program.himalaya.presenters;
 
 import androidx.annotation.Nullable;
 
-import com.program.himalaya.api.XimalayaApi;
+import com.program.himalaya.data.XimalayaApi;
 import com.program.himalaya.interfaces.ISeacherCallback;
 import com.program.himalaya.interfaces.ISearchPresenter;
 import com.program.himalaya.utils.Constants;

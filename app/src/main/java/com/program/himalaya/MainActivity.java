@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.program.himalaya.adapters.IndicatorAdapter;
 import com.program.himalaya.adapters.MainContenAdapter;
+import com.program.himalaya.data.XimalayaDBHelper;
 import com.program.himalaya.interfaces.IPlayerCallback;
 import com.program.himalaya.presenters.PlayerPresenter;
 import com.program.himalaya.presenters.RecommendPresenter;

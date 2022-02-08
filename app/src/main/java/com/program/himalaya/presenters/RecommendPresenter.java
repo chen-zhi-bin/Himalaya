@@ -2,22 +2,16 @@ package com.program.himalaya.presenters;
 
 import androidx.annotation.Nullable;
 
-import com.program.himalaya.api.XimalayaApi;
+import com.program.himalaya.data.XimalayaApi;
 import com.program.himalaya.interfaces.IRecommendPresenter;
 import com.program.himalaya.interfaces.IRecommendViewCallback;
-import com.program.himalaya.utils.Constants;
 import com.program.himalaya.utils.LogUtil;
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 //实现类
 public class RecommendPresenter implements IRecommendPresenter {

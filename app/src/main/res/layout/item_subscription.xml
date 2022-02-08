@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
         android:id="@+id/over_scroll_view"
-        android:background="#fff4f4f4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#fff4f4f4">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
             android:id="@+id/sub_list"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:background="#F4F4F4" />
+            android:background="#F4F4F4"
+            android:overScrollMode="never" />
 
     </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
-</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

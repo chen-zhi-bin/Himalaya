@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.program.himalaya.api.XimalayaApi;
+import com.program.himalaya.data.XimalayaApi;
 import com.program.himalaya.base.BaseApplication;
 import com.program.himalaya.interfaces.IPlayerCallback;
 import com.program.himalaya.interfaces.IPlayerPresenter;
@@ -272,6 +272,11 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
 
     @Override
     public void registerViewCallback(IPlayerCallback iPlayerCallback) {
+        if (!mIPlayerCallbacks.contains(iPlayerCallback)) {
+            mIPlayerCallbacks.add(iPlayerCallback);
+        }
+        //更新之前，让UI的Pager有数据
+        getPlayList();
         //通知当前的节目
         iPlayerCallback.onTrackUpdate(mCurrentTrack, mCurrentIndex);
         iPlayerCallback.onProgressChange(mCurrentProgressPosition,mProgressDuration);
@@ -282,9 +287,7 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
         mCurrentPlayMode = getModeByInt(modeInt);
         //
         iPlayerCallback.onPlayModeChange(mCurrentPlayMode);
-        if (!mIPlayerCallbacks.contains(iPlayerCallback)) {
-            mIPlayerCallbacks.add(iPlayerCallback);
-        }
+
     }
 
     private void handlePlayState(IPlayerCallback iPlayerCallback) {

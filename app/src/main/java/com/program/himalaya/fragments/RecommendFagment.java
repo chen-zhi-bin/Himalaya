@@ -26,7 +26,7 @@ import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
 import java.util.List;
 
-public class  RecommendFagment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener, AlbumListAdapter.OnRecommendItemClickListener {
+public class  RecommendFagment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener, AlbumListAdapter.OnAlbumItemClickListener {
     private static final String TAG="RecommendFagment";
     private UILoader mUiLoader;
     private View mrootView;
@@ -87,7 +87,7 @@ public class  RecommendFagment extends BaseFragment implements IRecommendViewCal
         //3.设置适配器
         mRecommendListAdapter =new AlbumListAdapter();
         mrecommendRV.setAdapter(mRecommendListAdapter);
-        mRecommendListAdapter.setOnRecommendItemClickListener(this);
+        mRecommendListAdapter.setAlbumItemClickListener(this);
         return mrootView;
     }
 
@@ -141,7 +141,6 @@ public class  RecommendFagment extends BaseFragment implements IRecommendViewCal
     @Override
     public void onItemClick(int position, Album album) {
         //根据位置拿数据
-
         AlbumDetailPresenter.getInstance().setTargetAlbum(album);
         //item被点击,跳转到详情界面
         Intent intent = new Intent(getContext(), DetailActivity.class);

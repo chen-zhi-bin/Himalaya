@@ -27,7 +27,6 @@ import com.program.himalaya.base.BaseActivity;
 import com.program.himalaya.interfaces.ISeacherCallback;
 import com.program.himalaya.presenters.AlbumDetailPresenter;
 import com.program.himalaya.presenters.SearchPresenter;
-import com.program.himalaya.utils.Constants;
 import com.program.himalaya.utils.LogUtil;
 import com.program.himalaya.views.FlowTextLayout;
 import com.program.himalaya.views.UILoader;
@@ -41,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity implements ISeacherCallback, AlbumListAdapter.OnRecommendItemClickListener {
+public class SearchActivity extends BaseActivity implements ISeacherCallback, AlbumListAdapter.OnAlbumItemClickListener {
 
     private static final String TAG = "SearchActivity";
     private View mBackBtn;
@@ -90,7 +89,7 @@ public class SearchActivity extends BaseActivity implements ISeacherCallback, Al
     }
 
     private void initEvent() {
-        mAlbumListAdapter.setOnRecommendItemClickListener(this);
+        mAlbumListAdapter.setAlbumItemClickListener(this);
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {

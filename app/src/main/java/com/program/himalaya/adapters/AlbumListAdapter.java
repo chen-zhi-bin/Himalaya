@@ -22,7 +22,8 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
 
     private static final String TAG = "RecommendListAdapter";
     private List<Album> mdata = new ArrayList<>();
-    private OnRecommendItemClickListener mItemClickListener = null;
+    private OnAlbumItemClickListener mItemClickListener = null;
+    private OnAlbumItemLongClickListener mLongClickListener = null;
 
 
     @NonNull
@@ -48,6 +49,18 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
             }
         });
         holder.setData(mdata.get(position));
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mLongClickListener != null) {
+                    int clickPostion = (int) v.getTag();
+                    mLongClickListener.onItemLongClick(mdata.get(clickPostion));
+                }
+                //true表示消费掉该事件
+                return true;
+            }
+        });
     }
 
     @Override
@@ -106,11 +119,22 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
         }
     }
 
-    public void setOnRecommendItemClickListener(OnRecommendItemClickListener listner) {
+    public void setAlbumItemClickListener(OnAlbumItemClickListener listner) {
         this.mItemClickListener = listner;
     }
 
-    public interface OnRecommendItemClickListener {
+    public interface OnAlbumItemClickListener {
         void onItemClick(int position, Album album);
+    }
+
+    public void setOnAlbumItemLongClickListener(OnAlbumItemLongClickListener listener){
+        this.mLongClickListener = listener;
+    }
+
+    /**
+     * 长按的接口
+     */
+    public interface OnAlbumItemLongClickListener{
+        void onItemLongClick(Album album);
     }
 }

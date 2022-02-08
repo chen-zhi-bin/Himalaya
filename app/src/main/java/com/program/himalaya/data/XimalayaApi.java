@@ -1,9 +1,6 @@
-package com.program.himalaya.api;
-
-import android.os.Trace;
+package com.program.himalaya.data;
 
 import com.program.himalaya.utils.Constants;
-import com.program.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
@@ -15,7 +12,6 @@ import com.ximalaya.ting.android.opensdk.model.word.SuggestWords;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class XimalayaApi {
 
