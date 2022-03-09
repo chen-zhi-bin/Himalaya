@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -240,6 +241,14 @@ public class SearchActivity extends BaseActivity implements ISeacherCallback, Al
                 @Override
                 protected View getSuccessView(ViewGroup container) {
                     return createSuccessView();
+                }
+                @Override
+                protected View getEmptyView() {
+                    //创建一个新的
+                    View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_empty_view,this,false);
+                    TextView tipsView = emptyView.findViewById(R.id.empty_view_tips_tv);
+                    tipsView.setText(R.string.search_no_sub_content_tips_text);
+                    return emptyView;
                 }
             };
             if (mUILoader.getParent() instanceof ViewGroup) {

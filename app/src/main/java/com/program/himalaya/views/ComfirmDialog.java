@@ -61,8 +61,8 @@ public class ComfirmDialog extends Dialog{
     }
 
     private void initView() {
-        mCancelSub = this.findViewById(R.id.dialog_cancel_sub_tv);
-        mGiveUo = this.findViewById(R.id.dialog_give_up_tv);
+        mCancelSub = this.findViewById(R.id.dialog_check_box_cancel);
+        mGiveUo = this.findViewById(R.id.dialog_check_box_confirm);
     }
 
 

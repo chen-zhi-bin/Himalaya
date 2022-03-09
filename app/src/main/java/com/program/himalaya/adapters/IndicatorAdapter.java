@@ -51,7 +51,6 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
             @Override
             public void onClick(View v) {
                 //切换viewPager的内容，如果index不一样的话
-                //TODO:
                 if (mOnTabClickListener!=null){
                     mOnTabClickListener.onTabClick(index);
                 }

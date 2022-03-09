@@ -53,6 +53,7 @@ public class SubscriptionDao implements ISubDao{
              db.setTransactionSuccessful();
              isAddSuccess =true;
         }catch (Exception e){
+            LogUtil.d(TAG,"订阅失败");
             e.printStackTrace();
             isAddSuccess=false;
         }finally {
@@ -131,10 +132,6 @@ public class SubscriptionDao implements ISubDao{
                 result.add(album);
             }
 
-            //把数据通知出去
-            if (mCallback != null) {
-                mCallback.onSubListLoaded(result);
-            }
             query.close();
             db.setTransactionSuccessful();
         }catch (Exception e){
@@ -143,6 +140,11 @@ public class SubscriptionDao implements ISubDao{
             if (db != null) {
                 db.endTransaction();
                 db.close();
+            }
+
+            //把数据通知出去
+            if (mCallback != null) {
+                mCallback.onSubListLoaded(result);
             }
         }
     }

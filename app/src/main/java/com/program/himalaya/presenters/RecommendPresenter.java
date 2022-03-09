@@ -20,6 +20,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
     private List<IRecommendViewCallback> mCallbacks = new ArrayList<>();
     private List<Album> mCurrentRecommend=null;
+    private List<Album> mRecommendList;
 
     private RecommendPresenter() {
 
@@ -56,6 +57,12 @@ public class RecommendPresenter implements IRecommendPresenter {
      */
     @Override
     public void getRecommendList() {
+        //如果内容不为空，那么直接使用当前的内容
+        if (mRecommendList != null&&mRecommendList.size()>0) {
+            LogUtil.d(TAG,"getRecommendList --> from list"+mRecommendList);
+            handlerRecommendResult(mRecommendList);
+            return;
+        }
         //推荐喜欢内容
         //封装参数
         updateLoadnig();
@@ -66,10 +73,11 @@ public class RecommendPresenter implements IRecommendPresenter {
                 LogUtil.d(TAG, "thread.name-->" + Thread.currentThread().getName());
                 //返回成功
                 if (gussLikeAlbumList != null) {
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
+                    LogUtil.d(TAG,"getRecommendList --> from network");
+                    mRecommendList = gussLikeAlbumList.getAlbumList();
                     //数据回来以后，要更新UI
 //                    upRecommandUI(albumList);
-                    handlerRecommendResult(albumList);
+                    handlerRecommendResult(mRecommendList);
                 }
             }
 
